@@ -1,0 +1,41 @@
+const webpack = require('webpack');
+
+module.exports={
+  mode:'development',//模式
+  devtool:'cheap-module-eval-source-map',//source-map
+  devServer:{//服务
+    contentBase:'./dist',
+    open:true,
+    port:8080,
+    hot:true
+  },
+  module:{
+    rules:[{
+      test:/\.scss$/,//scss解析
+      use:[
+        'style-loader',
+        {
+          loader:'css-loader',
+          options:{
+            importLoaders:2
+          }
+        },
+        'sass-loader',
+        'postcss-loader'
+      ]
+    },{
+      test:/\.css$/,//css解析
+      use:[
+        'style-loader',
+        'css-loader',
+        'postcss-loader'
+      ]
+    }]
+  },
+  plugins:[
+    new webpack.HotModuleReplacementPlugin()//热更新
+  ],
+  optimization:{
+    usedExports:true
+  }
+};
